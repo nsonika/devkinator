@@ -156,6 +156,7 @@ export default function Game() {
       if (j.kind === "guess") {
         setGuess(j.guess);
         setQuestion(null);
+        setGuessRevealed(false); // Ensure guess is not revealed automatically
       } else {
         setRemaining(j.remaining);
         await nextQuestion();
@@ -179,7 +180,9 @@ export default function Game() {
       });
       const j = await r.json();
       setGuess(j.guess);
+      setQuestion(null); // Clear any existing question
       setZinger("fine. here's my hot take.");
+      // Don't reveal the guess automatically - user must click 'Reveal Guess'
     } catch (error) {
       setZinger("Error making guess. Is the server running?");
     } finally {
@@ -191,6 +194,7 @@ export default function Game() {
   async function revealGuess() {
     if (!guess) return;
     setGuessRevealed(true);
+    setQuestion(null); // Ensure question is hidden when revealing guess
     log(`🧠 final guess: ${guess.name}`);
     setZinger(`${guess.name}? ship it. if prod breaks, it was a feature.`);
     
@@ -348,14 +352,16 @@ export default function Game() {
       <div>
         <div style={card()}>
           <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>My Guess</div>
-          <div style={{ fontWeight: 800, fontSize: 20, color: "#d9f99d" }}>{guess?.name ?? "—"}</div>
+          <div style={{ fontWeight: 800, fontSize: 20, color: "#d9f99d" }}>{guessRevealed ? guess?.name : "—"}</div>
           <div style={{ color: "#93a5bf", marginTop: 6 }}>
-            {guess ? (
+            {guess && guessRevealed ? (
               <>
                 <span style={badge()}>type: {guess.type}</span>{" "}
                 <span style={badge()}>domain: {guess.domain}</span>{" "}
                 <span style={badge()}>lang: {guess.language}</span>
               </>
+            ) : guess ? (
+              "Ready to reveal..."
             ) : (
               "I'll start judging soon…"
             )}
@@ -367,7 +373,7 @@ export default function Game() {
             <button 
               style={button(true)} 
               onClick={tweet} 
-              disabled={!guess}
+              disabled={!guess || !guessRevealed}
             >
               Tweet the chaos
             </button>

@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     if (!process.env.ZAI_API_KEY) {
       return NextResponse.json({ 
         error: "ZAI_API_KEY not configured",
-        fallbackUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDFtNXJnOWRxZWZxcmFwcXRwcWVtZDRxZXZnMmRmZXFmMWQ5ZXlxdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Rsp9jLIy0VZOKlZnd8/giphy.gif"
+        fallbackUrl: "https://media.giphy.com/media/9xt1MUZqkneFiWrAAD/giphy.gif"
       }, { status: 400 });
     }
     
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     if (!response.ok) {
       return NextResponse.json({ 
         error: "Video generation failed",
-        fallbackUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDFtNXJnOWRxZWZxcmFwcXRwcWVtZDRxZXZnMmRmZXFmMWQ5ZXlxdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Rsp9jLIy0VZOKlZnd8/giphy.gif"
+        fallbackUrl: "https://media.giphy.com/media/9xt1MUZqkneFiWrAAD/giphy.gif"
       }, { status: response.status });
     }
     
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
   } catch (error) {
     return NextResponse.json({ 
       error: "Video generation failed",
-      fallbackUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDFtNXJnOWRxZWZxcmFwcXRwcWVtZDRxZXZnMmRmZXFmMWQ5ZXlxdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Rsp9jLIy0VZOKlZnd8/giphy.gif"
+      fallbackUrl: "https://media.giphy.com/media/9xt1MUZqkneFiWrAAD/giphy.gif"
     }, { status: 500 });
   }
 }
